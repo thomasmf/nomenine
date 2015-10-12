@@ -145,20 +145,11 @@ class DOC_ROOT_NODE ( DOC_CHAPTER ) :
     CORE.register_doc_root_node( self )
   def build( self, depth, nodes ) :
     return """
-<!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="github_markdown.css">
 </head>
 <body class="markdown-body">
-<link rel="stylesheet" href="github_markdown.css">
-<style>
-    .markdown-body {
-        min-width: 200px;
-        max-width: 790px;
-        margin: 0 auto;
-        padding: 30px;
-    }
-</style>
 """ + '\n<hr>\n'.join( [ '\n'.join( self.build_header_elements( depth, nodes ) ) ] + self.build_elements( depth, nodes ) ) + """
 </body>
 </html>

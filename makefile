@@ -23,6 +23,7 @@ core.o:	FORCE
 #		python src/make.py --no_gc --no_optimize
 #		python src/make.py --no_gc
 		$(CC) $(CFLAGS) core.c
+		cp readme.html README.md
 
 
 
