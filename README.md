@@ -7,22 +7,6 @@
 <h2 id="Nomenine"> Nomenine</h2>
 <h6 ><a href="src/core/documentation/root.py">src/core/documentation/root.py</a></h6>
 
-<p>
-<em>My name is Thomas Mork Farrelly.
-Over the years I have spent a lot of time factoring code.
-Nomenine is a result of this.</em>
-</p>
-
-
-<p>
-<em>Nomenine may, in its current state, be of limited interest as a practical language, but hopefully some of it will be of some interest to some people.</em>
-</p>
-
-
-<p>
-<em>I'm releasing this only for backup purpose. Please come back later!</em>
-</p>
-
 <hr>
 <h3 id="About">1 About</h3>
 <h6 ><a href="src/core/documentation/about.py">src/core/documentation/about.py</a></h6>

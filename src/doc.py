@@ -140,7 +140,7 @@ class DOC_CHAPTER ( DOC_NODE ) :
 
 
 class DOC_ROOT_NODE ( DOC_CHAPTER ) :
-  def __init__( self, header, text, nodes = [] ) :
+  def __init__( self, header, text = '', nodes = [] ) :
     super( DOC_ROOT_NODE, self ).__init__( header = header, text = text, nodes = nodes )
     CORE.register_doc_root_node( self )
   def build( self, depth, nodes ) :

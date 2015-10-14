@@ -28,7 +28,7 @@ core.o:	FORCE
 
 
 clean:
-		rm *.o core.c core.h *.pyc nomenine *.h.gch *~
+		rm *.o core.c core.h *.pyc nomenine *.h.gch *~ readme.html
 
 FORCE:
 

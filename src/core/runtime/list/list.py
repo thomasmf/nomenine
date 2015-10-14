@@ -17,6 +17,8 @@ ROOT_SCOPE_METHOD(
 
 
 TEST( """ . ( list 2 ( . 2 * 100 ) 4 ) next value == 200 """ )
+TEST( """ . ( list ) sort joinToString "/" == "" """ )
+TEST( """ . ( list 1 ) sort joinToString "/" == "1" """ )
 TEST( """ . ( list 4 5 3 2 ) sort joinToString "/" == "2/3/4/5" """ )
 
 
@@ -69,9 +71,16 @@ CLASS( 'LIST',
     MO( """
       function joinToString ( :: separator ( StringExtract ) ) [
         let separator ( : that separator ) [
-          : this next reduce
-            ( : this value produce ( StringExtract ) )
-            ( closure [ : this + ( separator ) + ( : that produce ( StringExtract ) ) ] )
+          if s [ : this value produce ( StringExtract ) ] then [
+            if [ : this next value ] then [
+              s + ( : that separator ) + ( : this next joinToString ( : that separator ) )
+            ] else [
+              s
+            ]
+          ] else [
+            . ""
+          ]
+
         ]
       ]
     """ ),
