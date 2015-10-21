@@ -15,7 +15,6 @@ TEST( """ use [ ( definition TestFactory ( Factory @ ( function ( Integer ) [ : 
 TEST( """ use [ ( definition TestFactory ( Factory @ ( function ( Integer ) [ : that + 10000 ] ) ) ) ( function f ( TestFactory ) [ : that ] ) ] [ f ( TestFactory 100 ) + 1 ] == 10101 """ )
 
 
-
 OBJECT( 'FACTORY_FACTORY',
   methods = [
     MS( ARG( CW( '@' ), CG( 'ANY', 'constructor' ) ), """
@@ -72,4 +71,5 @@ FRAME( 'FACTORY_SIGNER_1',
     """ ),
   ]
 )
+
 

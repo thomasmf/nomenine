@@ -7,7 +7,7 @@ OBJECT( 'BOX',
       $NOT_IMPLEMENTED() ;
     """ ),
     MS( ARG( CW( 'get' ) ), """
-      $NOT_IMPLEMENTED() ;
+      JUMP__return_ANY( CONTEXT, CONTEXT, ACTION->value ) ;
     """ ),
   ],
   dump = D( '%s', '$DUMP( object->value )' )

@@ -548,7 +548,7 @@ Also notice that <strong>@</strong> is the equivalent of <em>new</em> as used in
 <h6 ><a href="src/core/runtime/control_structure/if.py">src/core/runtime/control_structure/if.py</a></h6>
 
 <p>
-There are two main forms of if-statements in Nomenine.
+There are two main forms of if-statements.
 </p>
 
 
@@ -558,30 +558,30 @@ There are two main forms of if-statements in Nomenine.
 
 
 <p>
-if [ condition ] then [ value ]
+<ul><li><strong>if</strong> <em>[ condition ]</em></li><li><strong>if</strong> <em>[ condition ]</em> <strong>then</strong> <em>[ value ]</em></li><li><strong>if</strong> <em>[ condition ]</em> <strong>then</strong> <em>[ value ]</em> <strong>else</strong> <em>[ alternative-value ]</em></li></ul>
 </p>
 
 
 <p>
-if [ condition ] then [ value ] else [ alternative-value ]
+2. The if-let statement where the result of the condition, named <em>variable</em>, can be used in the then-clause.
 </p>
 
 
 <p>
-2. The if-let statement where the result of the condition can be uses in the then-clause
+<ul><li><strong>if</strong> <em>variable</em> <em>[ condition ]</em></li><li><strong>if</strong> <em>variable</em> <em>[ condition ]</em> <strong>then</strong> <em>[ value ]</em></li><li><strong>if</strong> <em>variable</em> <em>[ condition ]</em> <strong>then</strong> <em>[ value ]</em> <strong>else</strong> <em>[ alternative-value ]</em></li></ul>
 </p>
 
 
 <p>
-if x [ condition ] then [ do something with x ] else [ fallback ]
-</p>
-
-
-<p>
-Notice that Nomenine does not use booleans.
+Notice that there are no booleans.
 Instead, the then-clause is evaluated if the condition-clause does not fail,
 and if it does fail, the optional else-clause is evaluated.
-For example, this means that if-statements can be use similarly to try-clauses.
+</p>
+
+
+<p>
+An if-expression is similar to a try-clause.
+The if-statement without either a then-clause or else-clause simply prevents a fail message from propagating.
 </p>
 
 </body>

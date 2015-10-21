@@ -1,7 +1,7 @@
 
 CC=gcc
 
-CFLAGS=-c -g -O3 -std=gnu99 -Wall -Winline -I/usr/include/gc -pthread
+CFLAGS=-c -g -O2 -std=gnu99 -Wall -Winline -I/usr/include/gc -pthread
 
 all:		nomenine
 
@@ -16,9 +16,9 @@ core.o:	FORCE
 #		python src/make.py --call_by_future
 #		python src/make.py --map_evaluation --map_parsing
 #		python src/make.py --no_optimize --type_checks --informative_errors
-#		python src/make.py --informative_errors	--type_checks
+		python src/make.py --informative_errors	--type_checks
 #		python src/make.py --no_optimize
-		python src/make.py
+#		python src/make.py
 #		python src/make.py --list_used_methods
 #		python src/make.py --no_gc --no_optimize
 #		python src/make.py --no_gc

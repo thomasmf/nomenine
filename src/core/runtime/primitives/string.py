@@ -6,7 +6,7 @@ ROOT_SCOPE_METHOD( MD( 'StringExtract', 'STRING_EXTRACT_TYPE_single()' ) )
 
 TEST( """ . "12345" produce ( Integer ) * 2 == 24690 """ )
 TEST( """ if [ . "12asd34" produce ( Integer ) ] then [ . 1 ] else [ . 2 ] == 2 """ )
-TEST( """ . "Hello" + ( . [ " to " "world" "!!!" ] ) == "Hello to world!!!" """ )
+TEST( """ . "Hello" + [ " to " "world" "!!!" ] == "Hello to world!!!" """ )
 TEST( """ . "this = " + ( Star @ ( RangeType @ ( . "a" produce ( List ) value ) ( . "z" produce ( List ) value ) ) consume ( . "this is a test" produce ( List ) )value ) == "this = this" """ )
 
 

@@ -3,6 +3,9 @@
 ROOT_SCOPE_METHOD( MD( 'Reference', 'REFERENCE_FACTORY_single()' ) )
 
 
+TEST( """ let r ( Reference @ ) [ do [ r set 100 ] r get + 100 ] == 200 """ ) ;
+
+
 FUNCTION( 'void nom_reference_lock( REFERENCE reference )', """
   nom_mutex_lock( reference->mutex ) ;
 """ )
@@ -50,27 +53,30 @@ FUNCTION( 'ANY nom_reference_get( REFERENCE reference )', """
 """ )
 
 
-
 OBJECT( 'REFERENCE_FACTORY',
   methods = [
     MS( ARG( CW( '@' ) ), """
-      $OUT( new reference ) ;
-      JUMP__return_ANY( CONTEXT, CONTEXT, $CA(nom_reference_new( $NONE )) ) ;
+      JUMP__return_ANY( CONTEXT, CONTEXT, $CA(REFERENCE_BOX_new( $CA(nom_reference_new( $NONE )) )) ) ;
     """ ),
   ]
 )
 
-OBJECT( 'REFERENCE',
-  inherit = [ 'BOX', 'MUTEXED' ],
+OBJECT( 'REFERENCE_BOX',
+  inherit = [ 'BOX' ],
   methods = [
     MC( ARG( CW( 'set' ), CG( 'ANY', 'value' ) ), """
-      nom_reference_set( ACTION, PARAM_value ) ;
-      JUMP__this( CONTEXT, CONTEXT ) ;
+      nom_reference_set( $C(REFERENCE,ACTION->value), PARAM_value ) ;
+      JUMP__return_ANY( CONTEXT, CONTEXT, $CA(ACTION) ) ;
     """ ),
-    MS( ARG( CW( 'get' ) ), """
-      JUMP__return_ANY( CONTEXT, CONTEXT, nom_reference_get( ACTION ) ) ;
-    """ ),
-  ],
+  ]
+)
+
+OBJECTIVE( 'REFERENCE',
+  inherit = [ 'VALUE', 'MUTEXED' ],
+  objective =  """
+    nom_do_sync( FRAME__TASK_new( CONTEXT, ACTION->value, THAT ) ) ;
+  """,
   dump = D( '%s', '$DUMP( object->value )' )
 )
+
 

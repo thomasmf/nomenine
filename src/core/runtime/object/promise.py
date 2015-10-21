@@ -109,7 +109,6 @@ FUNCTION( 'void nom_promise_return( ANY context, PROMISE promise )', """
 """ )
 
 
-
 OBJECT( 'PROMISE_FACTORY',
   methods = [
     MS( ARG( CW( '@' ) ), """
@@ -117,6 +116,7 @@ OBJECT( 'PROMISE_FACTORY',
     """ ),
   ]
 )
+
 
 OBJECT( 'PROMISE_BOX',
   inherit = [ 'BOX' ],
@@ -127,10 +127,7 @@ OBJECT( 'PROMISE_BOX',
     MC( ARG( CW( 'set' ), CG( 'ANY', 'value' ) ), """
       nom_promise_set_fine( $C(PROMISE,ACTION->value), PARAM_value ) ;
     """ ),
-    MS( ARG( CW( 'get' ) ), """
-      JUMP__return_ANY( CONTEXT, CONTEXT, ACTION->value ) ;
-    """ ),
-  ],
+  ]
 )
 
 
@@ -144,4 +141,5 @@ OBJECTIVE( 'PROMISE',
     nom_promise_apply( CONTEXT, ACTION, THAT ) ;
   """
 )
+
 

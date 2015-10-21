@@ -5,23 +5,29 @@ DOC_CHAPTER(
   topic = 'Reference',
   text = """
 
-There are two main forms of if-statements in Nomenine.
+There are two main forms of if-statements.
 
 1. Regular if-then with optional else-clause
 
-	if [ condition ] then [ value ]
+$DOC_LIST_UNORDERED(
+  $DOC_WORD( if ) $DOC_QUOTE( [ condition ] ),
+  $DOC_WORD( if ) $DOC_QUOTE( [ condition ] ) $DOC_WORD( then ) $DOC_QUOTE( [ value ] ),
+  $DOC_WORD( if ) $DOC_QUOTE( [ condition ] ) $DOC_WORD( then ) $DOC_QUOTE( [ value ] ) $DOC_WORD( else ) $DOC_QUOTE( [ alternative-value ] )
+)
+2. The if-let statement where the result of the condition, named $DOC_QUOTE( variable ), can be used in the then-clause.
 
-	if [ condition ] then [ value ] else [ alternative-value ]
+$DOC_LIST_UNORDERED(
+  $DOC_WORD( if ) $DOC_QUOTE( variable ) $DOC_QUOTE( [ condition ] ),
+  $DOC_WORD( if ) $DOC_QUOTE( variable ) $DOC_QUOTE( [ condition ] ) $DOC_WORD( then ) $DOC_QUOTE( [ value ] ),
+  $DOC_WORD( if ) $DOC_QUOTE( variable ) $DOC_QUOTE( [ condition ] ) $DOC_WORD( then ) $DOC_QUOTE( [ value ] ) $DOC_WORD( else ) $DOC_QUOTE( [ alternative-value ] )
+)
 
-2. The if-let statement where the result of the condition can be uses in the then-clause
-
-	if x [ condition ] then [ do something with x ] else [ fallback ]
-
-Notice that Nomenine does not use booleans.
+Notice that there are no booleans.
 Instead, the then-clause is evaluated if the condition-clause does not fail,
 and if it does fail, the optional else-clause is evaluated.
-For example, this means that if-statements can be use similarly to try-clauses.
 
+An if-expression is similar to a try-clause.
+The if-statement without either a then-clause or else-clause simply prevents a fail message from propagating.
 
   """
 )
