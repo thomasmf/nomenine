@@ -19,10 +19,30 @@ PRIMITIVE( 'EXPRESSION',
     A( 'ANY', 'phrase' )
   ],
   methods = [
+
     MS( ARG( CW( 'produceForEvaluation' ), CG( 'ANY', 'scope' ) ), """
       nom_expression_produce_for_evaluation( CONTEXT, ACTION->phrase, PARAM_scope ) ;
     """ ),
+
+    MTID_IS( 'STRING' ),
+    MTID( 'STRING_EXTRACT_TYPE_single', """
+      $NOM( CONTEXT, ACTION->phrase,
+
+        if [ : that value ] then [. "( " + ( Map @ ( : that ) ( Closure @ () [ : that serialize ] ) join " " ) + " )" ] else [ . "()" ]
+
+      ) ;
+    """ ),
+
+    MS( ARG( CW( 'serialize' ) ), """
+      $NOM( CONTEXT, ACTION->phrase,
+
+        if [ : that value ] then [. "( " + ( Map @ ( : that ) ( Closure @ () [ : that serialize ] ) join " " ) + " )" ] else [ . "()" ]
+
+      ) ;
+    """ ),
+
   ],
   dump = D( '%s', '$DUMP( object->phrase )' )
 )
+
 

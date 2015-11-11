@@ -1,6 +1,20 @@
 
 
-ROOT_SCOPE_METHOD( MD( 'Shape', 'SHAPE_FACTORY_single()' ) )
+ROOT_SCOPE_METHOD(
+
+  MD( 'Shape', 'SHAPE_FACTORY_single()' ),
+
+  MS( ARG( CW( '::' ), CG( 'WORD', 'name' ), CG( 'CLAUSE', 'clause' ) ), """
+    $NOM( CONTEXT,
+      $CA(UNION_new( $LISTNEW(
+        nom_definition( $CA(WORD_new( "name" )), PARAM_name ),
+        nom_definition( $CA(WORD_new( "clause" )), PARAM_clause )
+      ) )),
+      Shape @ ( : that name ) ( : that clause )
+    ) ;
+  """ )
+
+)
 
 
 FUNCTION( 'ANY nom_definition( ANY clause, ANY object )', """
@@ -11,6 +25,7 @@ FUNCTION( 'ANY nom_definition( ANY clause, ANY object )', """
 TEST( """ Shape @ x ( Any ) consume [ 1234 ] value x == 1234 """ )
 TEST( """ Shape @ x ( Integer ) consume [ 1234 ] value x == 1234 """ )
 TEST( """ Shape @ a ( Integer ) consume [ 1 2 ] next value == 2 """ )
+TEST( """ :: a ( Integer ) consume [ 123 ] value a == 123 """ )
 
 
 OBJECT( 'SHAPE_FACTORY',
@@ -59,4 +74,5 @@ FRAME( 'SHAPE_1',
     """ ),
   ]
 )
+
 

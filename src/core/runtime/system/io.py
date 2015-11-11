@@ -11,8 +11,7 @@ def DUMP( o ) :
 
 
 FUNCTION( 'void nom_run( n_string file_name )', """
-  ANY result = $CALL( evaluate_ANY, $CA(STRING_new( read_source( file_name ) )), ROOT_SCOPE_single() ) ;
-  $LOG( result ) ;
+  $CALL( evaluate_ANY, $CA(STRING_new( read_source( file_name ) )), ROOT_SCOPE_single() ) ;
 """ )
 
 FUNCTION( 'n_string read_source( n_string filename )', """

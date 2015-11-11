@@ -64,9 +64,12 @@ OBJECT( 'REFERENCE_FACTORY',
 OBJECT( 'REFERENCE_BOX',
   inherit = [ 'BOX' ],
   methods = [
-    MC( ARG( CW( 'set' ), CG( 'ANY', 'value' ) ), """
+    MS( ARG( CW( 'set' ), CG( 'ANY', 'value' ) ), """
       nom_reference_set( $C(REFERENCE,ACTION->value), PARAM_value ) ;
       JUMP__return_ANY( CONTEXT, CONTEXT, $CA(ACTION) ) ;
+    """ ),
+    MS( ARG( CW( 'value' ) ), """
+      JUMP__return_ANY( CONTEXT, CONTEXT, $C(REFERENCE,ACTION->value)->value ) ;
     """ ),
   ]
 )
@@ -74,7 +77,7 @@ OBJECT( 'REFERENCE_BOX',
 OBJECTIVE( 'REFERENCE',
   inherit = [ 'VALUE', 'MUTEXED' ],
   objective =  """
-    nom_do_sync( FRAME__TASK_new( CONTEXT, ACTION->value, THAT ) ) ;
+    nom_do_sync( FRAME__TASK_new( CONTEXT, nom_reference_get( ACTION ), THAT ) ) ;
   """,
   dump = D( '%s', '$DUMP( object->value )' )
 )

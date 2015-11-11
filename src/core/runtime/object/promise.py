@@ -121,10 +121,10 @@ OBJECT( 'PROMISE_FACTORY',
 OBJECT( 'PROMISE_BOX',
   inherit = [ 'BOX' ],
   methods = [
-    MC( ARG( CW( 'fail' ), CG( 'ANY', 'error' ) ), """
+    MS( ARG( CW( 'fail' ), CG( 'ANY', 'error' ) ), """
       nom_promise_set_fail( $C(PROMISE,ACTION->value), PARAM_error ) ;
     """ ),
-    MC( ARG( CW( 'set' ), CG( 'ANY', 'value' ) ), """
+    MS( ARG( CW( 'set' ), CG( 'ANY', 'value' ) ), """
       nom_promise_set_fine( $C(PROMISE,ACTION->value), PARAM_value ) ;
     """ ),
   ]

@@ -3,7 +3,7 @@
 ROOT_SCOPE_METHOD( MD( 'Range', 'RANGE_FACTORY_single()' ) )
 
 
-TEST( """ Range @ 0 9 produce ( StringExtract ) == "0123456789" """ )
+TEST( """ Range @ 0 4 produce ( StringExtract ) == "[ 0 1 2 3 4 ]" """ )
 
 
 OBJECT( 'RANGE_FACTORY',

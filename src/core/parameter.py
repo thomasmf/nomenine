@@ -1,10 +1,9 @@
 
 
 class PARAM ( object ) :
-  pass
-
   def build_primitive_dispatch( self, i ) :
     return ''
+
 
 class CW ( PARAM ) :
   def __init__( self, s ) :
@@ -38,6 +37,7 @@ class CW ( PARAM ) :
       }
     """
 
+
 class CT ( PARAM ) :
   def __init__( self, t, n ) :
     self.n = n
@@ -59,6 +59,7 @@ class CT ( PARAM ) :
   def build_cast( self, s ) :
     return '$C(' + self.t + ',' + s + ')'
 
+
 class CG ( CT ) :
   def __init__( self, t, n ) :
     self.n = n
@@ -76,6 +77,25 @@ class CG ( CT ) :
   def build_cast( self, s ) :
     return '$CA(' + s + ')'
 
+
+class CC ( CG ) :
+  def __init__( self, t, n ) :
+    self.n = n
+    self.t = t
+  def __eq__( self, other ) :
+    if ( not isinstance( other, CC ) ) :
+      return False
+    return self.t == other.t
+  def build_type_object( self ) :
+    return self.t
+  def build_name_component( self ) :
+    return self.n
+  def build_formal_parameter( self ) :
+    return 'ANY PARAM_' + self.n
+  def build_cast( self, s ) :
+    return '$CA(' + s + ')'
+
+
 class CTID ( CG ) :
   def __init__( self, nv ) :
     super( CTID, self ).__init__( 'ANY', 'tid' )
@@ -88,4 +108,5 @@ class CTID ( CG ) :
     return 'TID__' + self.nv
   def build_type_object( self ) :
     return 'TID_new( $CA(' + self.nv + '()) )'
+
 

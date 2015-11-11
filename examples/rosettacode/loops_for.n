@@ -1,0 +1,19 @@
+
+
+Range @ 1 5 reduce 0 ( closure [
+
+  do [
+
+    Range @ 1 ( : that ) reduce 0 ( closure [
+
+      console write "*"
+
+    ] )
+
+  ]
+
+  console writeLine ""
+
+] )
+
+

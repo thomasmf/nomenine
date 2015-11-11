@@ -2,10 +2,10 @@
 
 ROOT_SCOPE_METHOD(
   MD( 'Union', 'UNION_FACTORY_single()' ),
-  MO( """
-    function union ( :: elements ( Star @ ( Any ) ) ) [
-      Union @ ( : that elements )
-    ]
+  MS( ARG( CW( 'union' ), CC( 'STAR_new( ANY_FACTORY_single() )', 'elements' ) ), """
+    $NOM( CONTEXT, PARAM_elements,
+      Union @ ( : that )
+    ) ;
   """ )
 )
 

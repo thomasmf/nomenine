@@ -10,16 +10,20 @@ def LISTNEW( *elements ) :
 ROOT_SCOPE_METHOD(
   MD( 'List', 'LIST_FACTORY_single()' ),
   MD( 'empty', '$LISTNEW()' ),
-  MO( """
-    function list ( :: elements ( Star @ ( Any ) ) ) [ : that elements ]
+  MS( ARG( CW( 'list' ), CC( 'STAR_new( ANY_FACTORY_single() )', 'elements' ) ), """
+    $NOM( CONTEXT, PARAM_elements,
+      : that
+    ) ;
   """ )
 )
 
 
 TEST( """ . ( list 2 ( . 2 * 100 ) 4 ) next value == 200 """ )
-TEST( """ . ( list ) sort joinToString "/" == "" """ )
-TEST( """ . ( list 1 ) sort joinToString "/" == "1" """ )
-TEST( """ . ( list 4 5 3 2 ) sort joinToString "/" == "2/3/4/5" """ )
+TEST( """ . ( list ) sort join "/" == "" """ )
+TEST( """ . ( list 1 ) sort join "/" == "1" """ )
+TEST( """ . ( list 4 5 3 2 ) sort join "/" == "2/3/4/5" """ )
+TEST( """ . [] serialize == "[]" """ )
+TEST( """ . [ a [ 1 ] ( . 2 ) ] serialize == "[ a [ 1 ] ( . 2 ) ]" """ )
 
 
 FUNCTION( 'ANY nom_list_new( void* first, ... )', """
@@ -42,6 +46,7 @@ FUNCTION( 'ANY nom_list_new( void* first, ... )', """
 CLASS( 'LIST',
   inherit = [ 'TOKEN' ],
   methods = [
+
     MS( ARG( CW( 'evaluate' ), CG( 'ANY', 'scope' ) ), """
       nom_phrase_evaluate( CONTEXT, $CA(ACTION), PARAM_scope ) ;
     """ ),
@@ -52,13 +57,27 @@ CLASS( 'LIST',
       nom_list_reduce( CONTEXT, $CA(ACTION), PARAM_action, PARAM_sum ) ;
     """ ),
 
+
     MTID_IS( 'STRING' ),
     MTID( 'STRING_EXTRACT_TYPE_single', """
-      nom_this_list_produce_string( CONTEXT ) ;
+      $NOM( CONTEXT, $NONE,
+        if [ : this value ] then [. "[ " + ( Map @ ( : this ) ( Closure @ () [ : that serialize ] ) join " " ) + " ]" ] else [ . "[]" ]
+      ) ;
     """ ),
 
-    MO( """
-      function sort [
+    MC( ARG( CW( 'serialize' ) ), """
+      $NOM( CONTEXT, $NONE,
+        if [ : this value ] then [. "[ " + ( Map @ ( : this ) ( Closure @ () [ : that serialize ] ) join " " ) + " ]" ] else [ . "[]" ]
+      ) ;
+    """ ),
+
+
+    MC( ARG( CW( 'join' ), CT( 'STRING', 'separator' ) ), """
+      nom_this_list_join( CONTEXT, PARAM_separator ) ;
+    """ ),
+
+    MC( ARG( CW( 'sort' ) ), """
+      $NOM( CONTEXT, $NONE,
         if pivot [ : this value ] then [
           Merger @
             ( Mill @ ( : this next ) ( Predicate @ () [ : that =< ( pivot ) ] ) sort )
@@ -66,24 +85,9 @@ CLASS( 'LIST',
               ( Mill @ ( : this next ) ( Predicate @ () [ : that > ( pivot ) ] ) sort )
             )
         ] else [ empty ]
-      ]
+      ) ;
     """ ),
-    MO( """
-      function joinToString ( :: separator ( StringExtract ) ) [
-        let separator ( : that separator ) [
-          if s [ : this value produce ( StringExtract ) ] then [
-            if [ : this next value ] then [
-              s + ( : that separator ) + ( : this next joinToString ( : that separator ) )
-            ] else [
-              s
-            ]
-          ] else [
-            . ""
-          ]
 
-        ]
-      ]
-    """ ),
   ]
 )
 

@@ -14,3 +14,4 @@ class A ( ATTRIBUTE ) :
     self.type = type
     self.name = name
 
+

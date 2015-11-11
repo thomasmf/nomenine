@@ -6,8 +6,8 @@ ROOT_SCOPE_METHOD( MD( 'StringExtract', 'STRING_EXTRACT_TYPE_single()' ) )
 
 TEST( """ . "12345" produce ( Integer ) * 2 == 24690 """ )
 TEST( """ if [ . "12asd34" produce ( Integer ) ] then [ . 1 ] else [ . 2 ] == 2 """ )
-TEST( """ . "Hello" + [ " to " "world" "!!!" ] == "Hello to world!!!" """ )
-TEST( """ . "this = " + ( Star @ ( RangeType @ ( . "a" produce ( List ) value ) ( . "z" produce ( List ) value ) ) consume ( . "this is a test" produce ( List ) )value ) == "this = this" """ )
+TEST( """ . "Hello " + [ !!! ] == "Hello [ !!! ]" """ )
+TEST( """ Star @ ( RangeType @ ( . "a" produce ( List ) value ) ( . "z" produce ( List ) value ) ) consume ( . "this is a test" produce ( List ) ) value join "" == "this" """ )
 
 
 FUNCTION( 'n_string nom_format_string_va_list( const n_string fmt, va_list argp )', """
@@ -29,6 +29,10 @@ FUNCTION( 'n_string nom_format_string( const n_string fmt, ... )', """
 
 FUNCTION( 'void nom_string_evaluate( ANY context, STRING string, ANY scope )', """
   nom_parse_phrase( $CA(FRAME__STRING_EVALUATE_2_new( context, scope )), $CA(nom_element_characters_new( string->data )) ) ;
+""" )
+
+FUNCTION( 'n_boolean nom_string_is_empty( STRING string )', """
+  return string->data[ 0 ] == 0 ;
 """ )
 
 
@@ -68,6 +72,11 @@ PRIMITIVE( 'STRING',
         nom_fail( CONTEXT, "Strings are not equal", $NONE ) ;
       }
     """ ),
+
+    MS( ARG( CW( 'serialize' ) ), """
+      JUMP__return_ANY( CONTEXT, CONTEXT, $CA(STRING_new( nom_format_string( "\\"%s\\"", ACTION->data ) )) ) ;
+    """ ),
+
   ],
   dump = D( '\\"%s\\"', 'object->data' )
 )
@@ -82,4 +91,5 @@ FRAME( 'STRING_EVALUATE_2',
     """ ),
   ]
 )
+
 

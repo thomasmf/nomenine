@@ -19,6 +19,9 @@ CLASS( 'TYPE',
         nom_fail( CONTEXT, "Identity comparison === failed", $NONE ) ;
       }
     """ ),
+    MS( ARG( CW( 'tid' ) ), """
+      nom_fail( CONTEXT, "Type tid method missing", $NONE ) ;
+    """ ),
   ]
 )
 

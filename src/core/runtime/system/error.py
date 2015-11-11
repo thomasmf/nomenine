@@ -3,6 +3,13 @@
 REGISTER_FLAG( 'informative_errors', 'enable informative error objects passed with fail' )
 
 
+ROOT_SCOPE_METHOD(
+  MS( ARG( CW( 'dump' ), CG( 'ANY', 'object' ) ), """
+    JUMP__return_ANY( CONTEXT, CONTEXT, $CA(STRING_new( $DUMP( PARAM_object ) )) ) ;
+  """ )
+)
+
+
 def ERROR( s, v = '$FALSE' ) :
   return PRE( 'nom_error( ( ' + s + ' ), $CAST( n_boolean, ( ' + v + ' ) ), __FILE__, __LINE__ )' )
 
@@ -38,4 +45,5 @@ OBJECT( 'ERROR',
   ],
   dump = D( 'message:\\"%s\\" context:%s', 'object->message, $DUMP( object->cause )' )
 )
+
 

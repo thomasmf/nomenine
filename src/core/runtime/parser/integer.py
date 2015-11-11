@@ -24,7 +24,7 @@ FRAME( 'PARSE_TOKEN_INTEGER_1',
   ],
   methods = [
     MS( ARG( CW( 'return' ), CG( 'ANY', 'value' ) ), """
-      JUMP__produce_TID__STRING_EXTRACT_TYPE_single( $CA(FRAME__PARSE_TOKEN_INTEGER_2_new( ACTION->parent, PARAM_value )), ACTION->value->value, $CA(STRING_EXTRACT_TYPE_single()) ) ;
+      JUMP__join_STRING( $CA(FRAME__PARSE_TOKEN_INTEGER_2_new( ACTION->parent, PARAM_value )), ACTION->value->value, STRING_new( "" ) ) ;
     """ ),
   ]
 )
@@ -50,4 +50,5 @@ FRAME( 'PARSE_TOKEN_INTEGER_3',
     """ ),
   ]
 )
+
 

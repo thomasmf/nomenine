@@ -8,6 +8,9 @@ OBJECT( 'PARSE_TOKEN_STRING',
         $CA(PATTERN_new( $LISTNEW(
           CHARACTER_new( 0x22 ),
           SHAPE_new( $CA(WORD_new( "content" )), $CA(STAR_new( $CA(OR_CLAUSE_new( $LISTNEW(
+            CHARACTER_new( 0x09 ),
+            CHARACTER_new( 0x0A ),
+            CHARACTER_new( 0x0D ),
             CHARACTER_new( 0x20 ),
             CHARACTER_new( 0x21 ),
             $CA(RANGE_TYPE_new( $CA(CHARACTER_new( 0x23 )), $CA(CHARACTER_new( 0x7E )) ))
@@ -46,7 +49,7 @@ FRAME( 'PARSE_TOKEN_STRING_2',
   ],
   methods = [
     MS( ARG( CW( 'return' ), CG( 'ANY', 'value' ) ), """
-      JUMP__produce_TID__STRING_EXTRACT_TYPE_single( $CA(FRAME__PARSE_TOKEN_STRING_3_new( ACTION->parent, ACTION->next )), PARAM_value, $CA(STRING_EXTRACT_TYPE_single()) ) ;
+      JUMP__join_STRING( $CA(FRAME__PARSE_TOKEN_STRING_3_new( ACTION->parent, ACTION->next )), PARAM_value, STRING_new( "" ) ) ;
     """ ),
   ]
 )
@@ -61,4 +64,5 @@ FRAME( 'PARSE_TOKEN_STRING_3',
     """ ),
   ]
 )
+
 

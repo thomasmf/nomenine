@@ -102,10 +102,16 @@ PRIMITIVE( 'INTEGER',
       mpz_div( *v->data, *ACTION->data, *PARAM_integer->data ) ;
       JUMP__return_ANY( CONTEXT, CONTEXT, $CA(v) ) ;
     """ ),
+
+    MTID_IS( 'STRING' ),
     MTID( 'STRING_EXTRACT_TYPE_single', """
       JUMP__return_ANY( CONTEXT, CONTEXT, $CA(STRING_new( mpz_get_str( NULL, 10, *ACTION->data ) )) ) ;
     """ ),
-    MTID_IS( 'STRING' ),
+
+    MS( ARG( CW( 'serialize' ) ), """
+      JUMP__return_ANY( CONTEXT, CONTEXT, $CA(STRING_new( mpz_get_str( NULL, 10, *ACTION->data ) )) ) ;
+    """ ),
+
   ],
   dump = D( '%s', 'mpz_get_str( NULL, 10, *object->data )' )
 )

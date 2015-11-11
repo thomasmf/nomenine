@@ -9,6 +9,7 @@
 # result is not repreprocessed, use return PRE( result ) or something
 # comments are preprocessed
 
+
 def is_identifier( c ) :
   return c.isalpha() or c.isdigit() or ( c == '_' )
 
@@ -63,4 +64,5 @@ def PRE( code ) :
       else :
         parameter += c
   return result
+
 

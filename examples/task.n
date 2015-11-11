@@ -1,0 +1,62 @@
+
+
+Range @ 1 10 reduce 0 ( closure [
+
+  do [ console writeLine ( . "start task " + ( : that ) ) ]
+
+  Task @
+
+    ( union
+
+
+      ( function return ( :: value ( Any ) ) [
+
+        do [ console writeLine ( . "finnish task " + ( : that value ) ) ]
+
+        stop
+
+      ] )
+
+
+      ( function fail ( :: error ( Any ) ) [
+
+        do [ console writeLine "failed task" ]
+
+        stop
+
+      ] )
+
+
+      ( function ( :: message ( Star @ ( Any ) ) ) [
+
+        do [ console writeLine "failed task with unrecognized message to context" ]
+
+        do [ console writeLine ( . "message was: " + ( : that message ) ) ]
+
+        stop
+
+      ] )
+
+
+    )
+
+
+    ( closure [
+
+      do [ console writeLine ( . "do task " + ( : that ) ) ]
+
+      do [ . "" + ( Map @ ( Range @ 1 1000 ) ( closure [ : that ] ) ) ]
+
+      . ( : that )
+
+    ] )
+
+
+    ( : that )
+
+
+  schedule
+
+] )
+
+

@@ -162,29 +162,6 @@ class MTID_IS ( MTID ) :
     )
 
 
-class MN( METHOD ) :
-  buoyancy = 500
-
-  def __init__( self, expression ) :
-    self.expression = expression
-
-  def build_reification_component( self ) :
-    return '$LAZY( ANY, $CA(' + self.expression + ') )'
-
-  def build_primitive_dispatch( self ) :
-    return """
-      nom_array_mutable_nolock_push( reification, """ + self.build_reification_component() + """ ) ;
-    """
-
-class MO( MN ) :
-  buoyancy = 1000
-
-  def __init__( self, nom_code ) :
-    super( MO, self ).__init__( """
-      nom_lazy_new( $CA(STUB_new( ROOT_SCOPE_single(), $CALL( parse, $CA(STRING_new( """ + build_c_string( nom_code ) + """ )) ) )) )
-    """ )
-
-
 class MF( METHOD ) :
   buoyancy = 1000000
 
@@ -195,4 +172,5 @@ class MF( METHOD ) :
     return ' '.join( [
       'ACTION->parent'
     ] )
+
 

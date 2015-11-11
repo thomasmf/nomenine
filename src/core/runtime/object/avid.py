@@ -2,15 +2,16 @@
 
 ROOT_SCOPE_METHOD(
   MD( 'Avid', 'AVID_FACTORY_single()' ),
-  MO( """
-    function avid ( :: action ( List ) ) [
-      Avid @ ( Stub @ ( : this ) ( : that action ) )
-    ]
+ 
+  MC( ARG( CW( 'avid' ), CG( 'LIST', 'phrase' ) ), """
+    $NOM( CONTEXT, PARAM_phrase,
+      Avid @ ( Stub @ ( : this ) ( : that ) )
+    ) ;
   """ )
 )
 
 
-TEST( """ . ( Avid @ ( Stub @ () [ . 3 * 33 ] ) ) + 1 == 100 """ )
+TEST( """ . ( avid [ . 3 * 33 ] ) + 1 == 100 """ )
 
 
 FUNCTION( 'ANY nom_avid_new( ANY context, ANY action )', """

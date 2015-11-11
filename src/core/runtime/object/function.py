@@ -1,6 +1,30 @@
 
 
-ROOT_SCOPE_METHOD( MD( 'Function', 'FUNCTION_FACTORY_single()' ) )
+ROOT_SCOPE_METHOD(
+
+  MD( 'Function', 'FUNCTION_FACTORY_single()' ),
+
+  MC( ARG( CW( 'function' ), CC( 'STAR_new( CLAUSE_FACTORY_single() )', 'parameters' ), CG( 'LIST', 'phrase' ) ), """
+    $NOM( CONTEXT,
+      $CA(UNION_new( $LISTNEW(
+        nom_definition( $CA(WORD_new( "parameters" )), PARAM_parameters ),
+        nom_definition( $CA(WORD_new( "phrase" )), PARAM_phrase )
+      ) )),
+      Function @ ( Pattern @ ( : that parameters ) ) ( Closure @ ( : this ) ( : that phrase ) )
+    ) ;
+  """ ),
+
+  MS( ARG( CW( 'definition' ), CG( 'WORD', 'name' ), CG( 'ANY', 'value' ) ), """
+    $NOM( CONTEXT,
+      $CA(UNION_new( $LISTNEW(
+        nom_definition( $CA(WORD_new( "name" )), PARAM_name ),
+        nom_definition( $CA(WORD_new( "value" )), PARAM_value )
+      ) )),
+      Function @ ( : that name ) ( Stub @ ( : that value ) [] )
+    ) ;
+  """ )
+
+)
 
 
 TEST( """ Function @ x ( Closure @ () [ . 1234 ] ) x == 1234 """ )
@@ -8,6 +32,8 @@ TEST( """ Function @ ( Pattern @ ( . [ x ] flatten () ) ) ( Closure @ () [ . 234
 TEST( """ Function @ ( Pattern @ ( . [ x ( Integer ) ] flatten () ) ) ( Closure @ () [ : that * ( : that ) ] ) x 9 == 81 """ )
 TEST( """ Function @ ( Pattern @ ( . [ x ( Shape @ a ( Integer ) ) ( Shape @ b ( Integer ) ) ] flatten () ) ) ( Closure @ () [ : that a * ( : that b ) ] ) x 8 5 == 40 """ )
 TEST( """ . [ if [ f1 ] then [ . 6 ] else [ . 9 ] ] evaluate ( Union @ ( . [ ( Function @ f1 ( Closure @ () [FAIL] ) ) ( Function @ f1 ( Closure @ () [ . 1 ] ) ) () ] flatten () ) ) == 9 """ )
+TEST( """ function b [ . 100 ] b == 100 """ )
+TEST( """ definition x 123 x == 123 """ )
 
 
 OBJECT( 'FUNCTION_FACTORY',

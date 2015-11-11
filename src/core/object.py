@@ -1,7 +1,9 @@
 
 
 class OBJECTIVE ( object ) :
+
   current_pix = 0
+
   def __init__( self, name, attributes = [], objective = '', dump = D(), inherit = [] ) :
     self.name = name
     self.attributes = attributes
@@ -89,7 +91,6 @@ class OBJECTIVE ( object ) :
       'return ;',
     ] ).strip()
 
-
   def isOk( self ) :
     return self.inherit == []
 
@@ -121,7 +122,9 @@ class OBJECTIVE ( object ) :
       return []
 
 
+
 class OBJECT ( OBJECTIVE ) :
+
   def __init__( self, name, attributes = [], methods = [], dump = D(), inherit = [] ) :
     self.name = name
     self.methods = methods
@@ -145,14 +148,12 @@ class OBJECT ( OBJECTIVE ) :
       for m in sorted( self.methods, key = lambda x : x.buoyancy )
     ] )
 
-
   def build_objective( self ) :
     return self.build_objective_box( """
       ARRAY_MUTABLE_NOLOCK reification = nom_array_mutable_nolock_new() ;
       """ + self.build_primitive_dispatch() + """
       nom_do_sync( FRAME__TASK_new( task->parent, $CA(UNION_new( $CA(reification) )), THAT ) ) ;
     """ )
-
 
   def fix( self ) :
     if not self.isOk() :
@@ -181,7 +182,9 @@ class OBJECT ( OBJECTIVE ) :
     return False
 
 
+
 class FRAME ( OBJECT ) :
+
   def __init__( self, name, attributes = [], methods = [], dump = D() ) :
     super( FRAME, self ).__init__( 'FRAME__' + name,
       inherit = [ 'FRAME' ],
@@ -198,7 +201,9 @@ class FRAME ( OBJECT ) :
       return 'JUMP__' + pattern.build_function_name() + '__forward'
 
 
+
 class TYPE ( OBJECT ) :
+
   def __init__( self, name, methods = [], dump = D(), primitive = None ) :
     self.primitive = primitive
     super( TYPE, self ).__init__( name,
@@ -211,6 +216,9 @@ class TYPE ( OBJECT ) :
           self.build_consume_opt(),
           'nom_clause_consume( CONTEXT, $CA(ACTION), PARAM_phrase ) ;',
         ] ) ),
+        MS( ARG( CW( 'tid' ) ), """
+          JUMP__return_ANY( CONTEXT, CONTEXT, $CA(TID_new( """ + name + """_single() )) ) ;
+       """ ),
       ] + methods,
       dump = dump
     )
@@ -232,6 +240,7 @@ class TYPE ( OBJECT ) :
 
 
 class CLASS ( OBJECT ) :
+
   def __init__( self, name, attributes = [], methods = [], factory_methods = [], dump = D(), inherit = []  ) :
     super( CLASS, self ).__init__( name,
       inherit = inherit,
@@ -244,7 +253,9 @@ class CLASS ( OBJECT ) :
     TYPE( name + '_FACTORY', factory_methods, primitive = name )
 
 
+
 class PRIMITIVE ( CLASS ) :
+
   def __init__( self, name, attributes = [], methods = [], factory_methods = [], dump = D(), inherit = []  ) :
     super( PRIMITIVE, self ).__init__( name,
       inherit = inherit,
@@ -256,4 +267,5 @@ class PRIMITIVE ( CLASS ) :
       dump = dump
     )
     TYPE( name + '_EXTRACT_TYPE', primitive = name )
+
 

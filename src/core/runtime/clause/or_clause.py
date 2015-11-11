@@ -11,7 +11,6 @@ OBJECT( 'OR_CLAUSE_FACTORY',
   ]
 )
 
-
 OBJECT( 'OR_CLAUSE',
   inherit = [ 'CLAUSE' ],
   attributes = [
@@ -83,4 +82,5 @@ FRAME( 'OR_CLAUSE_5',
     """ ),
   ]
 )
+
 

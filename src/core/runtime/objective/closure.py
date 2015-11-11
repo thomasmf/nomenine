@@ -2,10 +2,10 @@
 
 ROOT_SCOPE_METHOD(
   MD( 'Closure', 'CLOSURE_FACTORY_single()' ),
-  MO( """
-    function closure ( :: action ( List ) ) [
-      Closure @ ( : this ) ( : that action )
-    ]
+  MC( ARG( CW( 'closure' ), CG( 'LIST', 'phrase' ) ), """
+    $NOM( CONTEXT, PARAM_phrase,
+      Closure @ ( : this ) ( : that )
+    ) ;
   """ )
 )
 

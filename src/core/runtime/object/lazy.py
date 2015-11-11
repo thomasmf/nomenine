@@ -2,10 +2,11 @@
 
 ROOT_SCOPE_METHOD(
   MD( 'Lazy', 'LAZY_FACTORY_single()' ),
-  MO( """
-    function lazy ( :: action ( List ) ) [
-      Lazy @ ( Stub @ ( : this ) ( : that action ) )
-    ]
+
+  MC( ARG( CW( 'lazy' ), CG( 'LIST', 'phrase' ) ), """
+    $NOM( CONTEXT, PARAM_phrase,
+      Lazy @ ( Stub @ ( : this ) ( : that ) )
+    ) ;
   """ )
 )
 

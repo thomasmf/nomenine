@@ -424,7 +424,6 @@ It is possible to have more than one definition:
 <pre><code>with ( union
   ( function f ( Integer ) [ : that + 4 ] )
   ( function x [ . 100 ] )
-  ()
 ) [
   f ( x )
 ]</code></pre>
@@ -435,17 +434,9 @@ It is possible to have more than one definition:
 <p>
 <strong>with</strong> takes an object and a list as its arguments.
 The list is the expression.
-The object is scope that will be used in the evaluation of the expression.
-</p>
-
-
-<p>
-Notice the empty parenthesis.
-Recall that the initial object in an expression is the scope.
-The empty parenthesis is scope.
-The reason for using it in the union, specifically at the end,
-is to make the new scope inherit the parent scope.
-Therefore the two functions in addition to everything in the original scope is available in the expression.
+The expression will be evaluated in a scope that is the union of the scope and the object,
+so that terminology both from the object and the scope is available.
+Terminology in the object will overshadow same terminology in the scope.
 </p>
 
 

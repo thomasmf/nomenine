@@ -187,3 +187,4 @@ class DOC_EMBED ( DOC_NODE ) :
         return n
     return None
 
+

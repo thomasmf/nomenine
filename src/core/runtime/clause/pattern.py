@@ -18,7 +18,6 @@ OBJECT( 'PATTERN',
   ],
   methods = [
     MS( ARG( CW( 'consume' ), CG( 'LIST', 'phrase' ) ), """
-//      $OUT( pattern consume ) ;
       JUMP__consume_LIST( $CA(FRAME__PATTERN_0_new( CONTEXT )), $CA(GROUPING_new( ACTION->elements )), PARAM_phrase ) ;
     """ )
   ],
@@ -50,4 +49,5 @@ FRAME( 'PATTERN_1',
     """ ),
   ]
 )
+
 

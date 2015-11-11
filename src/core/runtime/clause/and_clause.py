@@ -16,7 +16,6 @@ OBJECT( 'AND_CLAUSE_FACTORY',
   ]
 )
 
-
 OBJECT( 'AND_CLAUSE',
   inherit = [ 'CLAUSE' ],
   attributes = [
@@ -67,4 +66,5 @@ FRAME( 'AND_CLAUSE_5',
     """ ),
   ]
 )
+
 

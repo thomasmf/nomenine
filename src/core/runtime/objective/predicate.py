@@ -2,11 +2,6 @@
 
 ROOT_SCOPE_METHOD(
   MD( 'Predicate', 'PREDICATE_FACTORY_single()' ),
-  MO( """
-    function predicate ( :: action ( List ) ) [
-      Predicate @ ( : this ) ( : that action )
-    ]
-  """ )
 )
 
 

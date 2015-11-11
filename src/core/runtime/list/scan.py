@@ -1,6 +1,5 @@
 
 
-
 FUNCTION( 'void* nom_list_scan_start_routine( void* arg )', """
   FRAME__LIST_SCAN_1 frame = $C(FRAME__LIST_SCAN_1,arg) ;
   JUMP__value( $CA(frame), frame->source ) ;
@@ -14,7 +13,6 @@ FUNCTION( 'void nom_list_scan_async( FRAME__LIST_SCAN_1 frame )', """
 FUNCTION( 'void nom_list_scan( ANY context, ANY source )', """
   nom_list_scan_async( FRAME__LIST_SCAN_1_new( context, source ) ) ;
 """ )
-
 
 
 FRAME( 'LIST_SCAN_1',

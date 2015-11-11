@@ -1,0 +1,167 @@
+
+
+do [ console writeLine
+
+"Nomen - Interactive Nomenine Evaluator - v0.1
+Please use with rlwrap.
+Write 'help!' for help."
+
+]
+
+
+let rootScope () [
+
+    let repl ( function ( :: scope ( Any ) ) [
+
+
+      do [ console write "> " ]
+
+      do [ let scope ( : that scope ) [
+
+        Task @
+
+          ( union
+
+
+            ( let repl ( : this ) [
+
+              function cycle ( :: scope ( Any ) ) [
+
+                do [ repl ( : that scope ) ]
+
+                stop
+
+              ]
+
+            ] )
+
+
+            ( function return ( :: value ( Any ) ) [
+
+              do [ console writeLine ( if value [ . "" + ( : that value ) ] then [ value ] else [ dump ( : that value ) ] ) ]
+
+              : this cycle ( scope )
+
+            ] )
+
+
+            ( function fail ( :: error ( Any ) ) [
+
+              do [ console writeLine "error : " ]
+
+              do [ if [ : that error log ] ]
+
+              : this cycle ( scope )
+
+            ] )
+
+
+            ( function ( :: message ( Star @ ( Any ) ) ) [
+
+              do [ console writeLine ( . "Unrecognized message to context: " + ( : that message ) ) ]
+
+              : this cycle ( scope )
+
+            ] )
+
+          )
+
+          ( Closure @ ( union
+
+            ( scope )
+
+            ( union
+
+              ( function produce ( StringExtract tid ) [
+
+                : cycle ( scope )
+
+              ] )
+
+
+              ( function help! [
+
+                do [ console writeLine
+"The following extra commands are available:
+
+	help!					show this message
+	reset!					clear scope
+
+	set: ( object )				make object part of scope
+	def: word ( object )			make word denote object in scope
+						example: def: x 123
+	fun: ...parameters... [ phrase ]	make function part of scope
+						example: fun: f ( :: n ( Integer ) ) [ : that n * ( : that n ) ]
+
+	ctrl-c to exit"
+
+                ]
+
+                : cycle ( scope )
+
+              ] )
+
+              ( function reset! [
+
+                : cycle ( none )
+
+              ] )
+
+
+              ( function set: ( :: object ( Any ) ) [
+
+                : cycle ( union ( : that object ) ( scope ) )
+
+              ] )
+
+              ( function def: ( :: name ( Word ) ) ( :: object ( Any ) ) [
+
+                : cycle ( union ( definition ( : that name ) ( : that object ) ) ( scope ) )
+
+              ] )
+
+              ( function fun: ( :: parameters ( Plus @ ( Clause ) ) ) ( :: phrase ( List ) ) [
+
+                : cycle ( union ( Function @ ( Pattern @ ( : that parameters ) ) ( Closure @ ( : this ) ( : that phrase ) ) ) ( scope ) )
+
+              ] )
+
+
+              ( rootScope )
+
+
+              ( function ( :: message ( Star @ ( Any ) ) ) [
+
+                do [ console writeLine ( . "Unrecognized message to scope: " + ( : that message ) ) ]
+
+                : cycle ( scope )
+
+              ] )
+
+            )
+
+          ) [
+
+            console readLine evaluate ()
+
+          ] )
+
+          ( none )
+
+
+        schedule
+
+
+      ] ]
+
+    ]
+
+  ) [
+
+    repl ( none )
+
+  ]
+
+]
+
+

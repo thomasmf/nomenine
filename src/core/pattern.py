@@ -1,6 +1,7 @@
 
 
 class ARGA ( object ) :
+
   def __init__( self ) :
     pass
 
@@ -13,11 +14,14 @@ class ARGA ( object ) :
 
 
 class ARG( ARGA ) :
+
   def __init__( self, *pattern ) :
     self.pattern = pattern
     CORE.register_pattern( self )
+
   def __repr__( self ) :
     return 'ARG[ ' + ', '.join( [ str( x ) for x in self.pattern ] ) + ' ]'
+
   def __len__( self ) :
     return len( self.pattern )
 
@@ -31,7 +35,6 @@ class ARG( ARGA ) :
       if ( not ( self[ i ] == other[ i ] ) ) :
         return False
     return True
-
 
   def build_actual_parameters( self, ACTION = 'ACTION' ) :
     return ', '.join( [ 'CONTEXT', ACTION ] + self.build_function_actual_parameter_elements() )
@@ -55,7 +58,6 @@ class ARG( ARGA ) :
       ] ),
     ] )
 
-
   def build_type_objects( self ) :
     return  ''.join( [
       '$CA(GROUPING_new( $LISTNEW(',
@@ -72,8 +74,6 @@ class ARG( ARGA ) :
       ', '.join( self.build_message_object_elements() ),
       ' )',
     ] )
-
-
 
   def create_jump_function_forward( self ) :
     return FUNCTION( self.build_jump_function_signature( '__forward' ),
@@ -103,7 +103,6 @@ class ARG( ARGA ) :
       ] )
     )
 
-
   def build_message_object_elements( self ) :
     return filter( None, [ p.build_message_object() for p in self.pattern ] )
 
@@ -115,7 +114,6 @@ class ARG( ARGA ) :
 
   def build_function_actual_parameter_elements( self ) :
     return filter( None, [ p.build_actual_parameter() for p in self.pattern ] )
-
 
   def build_primitive_dispatch( self ) :
     return '\n'.join( [

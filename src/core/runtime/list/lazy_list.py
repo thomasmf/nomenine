@@ -3,8 +3,8 @@
 ROOT_SCOPE_METHOD( MD( 'LazyList', 'LAZY_LIST_FACTORY_single()' ) )
 
 
-TEST( """ LazyList @ ( Closure @ () [ do [ : yield 123 ] do [ : yield 234 ] do [ : yield 345 ] ] ) joinToString "," == "123,234,345" """ )
-TEST( """ LazyList @ ( Closure @ () [ do [ : yield 123 ] do [ Range @ 1 3 reduce 0 ( closure [ : yield ( : that ) ] ) ] do [ : yield 345 ] ] ) joinToString "," == "123,1,2,3,345" """ )
+TEST( """ LazyList @ ( Closure @ () [ do [ : yield 123 ] do [ : yield 234 ] do [ : yield 345 ] ] ) join "," == "123,234,345" """ )
+TEST( """ LazyList @ ( Closure @ () [ do [ : yield 123 ] do [ Range @ 1 3 reduce 0 ( closure [ : yield ( : that ) ] ) ] do [ : yield 345 ] ] ) join "," == "123,1,2,3,345" """ )
 
 
 FUNCTION( 'ANY nom_lazy_list_new( ANY action )', """

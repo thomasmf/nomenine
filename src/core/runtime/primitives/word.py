@@ -33,10 +33,15 @@ PRIMITIVE( 'WORD',
         nom_fail( CONTEXT, "Word comparison == failed", $NONE ) ;
       }
     """ ),
+
+    MTID_IS( 'STRING' ),
     MTID( 'STRING_EXTRACT_TYPE_single', """
       JUMP__return_ANY( CONTEXT, CONTEXT, $CA(STRING_new( ACTION->data )) ) ;
     """ ),
-    MTID_IS( 'STRING' ),
+
+    MS( ARG( CW( 'serialize' ) ), """
+      JUMP__return_ANY( CONTEXT, CONTEXT, $CA(STRING_new( ACTION->data )) ) ;
+    """ ),
   ],
   dump = D( '\033[0;32m%s\033[0m ', 'object->data' )
 )

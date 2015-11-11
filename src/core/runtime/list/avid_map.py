@@ -3,7 +3,7 @@
 ROOT_SCOPE_METHOD( MD( 'AvidMap', 'AVID_MAP_FACTORY_single()' ) )
 
 
-TEST( """ AvidMap @ ( list 1 2 3 ) ( closure [ : that * 3 ] ) joinToString ":" == "3:6:9" """ )
+TEST( """ AvidMap @ ( list 1 2 3 ) ( closure [ : that * 3 ] ) join ":" == "3:6:9" """ )
 
 
 FUNCTION( 'ANY nom_avid_map_new( ANY context, ANY action, ANY source )', """

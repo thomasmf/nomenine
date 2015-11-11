@@ -1,18 +1,25 @@
 
 
 ROOT_SCOPE_METHOD(
+
   MD( 'Factory', 'FACTORY_FACTORY_single()' ),
-  MO( """
-    function factory ( Shape @ parameters ( Plus @ ( Clause ) ) ) ( Shape @ definition ( List ) ) [
-      Factory @ ( Function @ ( Pattern @ ( : that parameters ) ) ( Closure @ ( : this ) ( : that definition ) ) )
-    ]
+
+  MC( ARG( CW( 'factory' ), CC( 'STAR_new( CLAUSE_FACTORY_single() )', 'parameters' ), CG( 'LIST', 'phrase' ) ), """
+    $NOM( CONTEXT,
+      $CA(UNION_new( $LISTNEW(
+        nom_definition( $CA(WORD_new( "parameters" )), PARAM_parameters ),
+        nom_definition( $CA(WORD_new( "phrase" )), PARAM_phrase )
+      ) )),
+      Factory @ ( Function @ ( Pattern @ ( : that parameters ) ) ( Closure @ ( : this ) ( : that phrase ) ) )
+    ) ;
   """ )
+
 )
 
 
 TEST( """ Factory @ ( function ( Integer ) [ : that + 10000 ] ) 100 + 1 == 10101 """ )
-TEST( """ use [ ( definition TestFactory ( Factory @ ( function ( Integer ) [ : that + 10000 ] ) ) ) ] [ TestFactory consume ( list ( TestFactory 100 ) 0 0 ) value + 1 ] == 10101 """ )
-TEST( """ use [ ( definition TestFactory ( Factory @ ( function ( Integer ) [ : that + 10000 ] ) ) ) ( function f ( TestFactory ) [ : that ] ) ] [ f ( TestFactory 100 ) + 1 ] == 10101 """ )
+TEST( """ with ( definition TestFactory ( Factory @ ( function ( Integer ) [ : that + 10000 ] ) ) ) [ TestFactory consume ( list ( TestFactory 100 ) 0 0 ) value + 1 ] """ )
+TEST( """ use [ [ definition TestFactory ( Factory @ ( function ( Integer ) [ : that + 10000 ] ) ) ] [ function f ( TestFactory ) [ : that ] ] ] [ f ( TestFactory 100 ) + 1 ] == 10101 """ )
 
 
 OBJECT( 'FACTORY_FACTORY',

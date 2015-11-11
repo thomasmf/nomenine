@@ -1,5 +1,11 @@
 
 
+REGISTER_FLAG( 'detach_threads', 'detach threads' )
+
+
+ROOT_SCOPE_METHOD( MD( 'Task', 'TASK_FACTORY_single()' ) )
+
+
 FUNCTION( 'void nom_do_sync( FRAME__TASK task )', """
   task->action->objective( $CA(task) ) ;
   return ;
@@ -23,16 +29,31 @@ FUNCTION( 'void nom_call_async( void* (*start_routine)( void* arg ), void* arg )
     exit( EX_SOFTWARE ) ;
   }
 
-//  pthread_detach( *thread ) ;
-  pthread_join( *thread, NULL ) ;
+  $ENABLED( detach_threads,
+    pthread_detach( *thread ) ;
+  )
+
+  $DISABLED( informative_errors,
+    pthread_join( *thread, NULL ) ;
+  )
+
   return ;
 """ )
 
 FUNCTION( 'void nom_wait_for_all_activity_to_finish()', """
-  $OUT( finnished. waiting. ) ;
+//  $OUT( finnished. waiting. ) ;
   pthread_exit( NULL ) ;
   return ;
 """ )
+
+
+OBJECT( 'TASK_FACTORY',
+  methods = [
+    MS( ARG( CW( '@' ), CG( 'ANY', 'context' ), CG( 'ANY', 'action' ), CG( 'ANY', 'that' ) ), """
+      JUMP__return_ANY( CONTEXT, CONTEXT, $CA(FRAME__TASK_new( PARAM_context, PARAM_action, PARAM_that )) ) ;
+    """ ),
+  ]
+)
 
 
 FRAME( 'TASK',
@@ -41,10 +62,7 @@ FRAME( 'TASK',
     A( 'ANY', 'that' ),
   ],
   methods = [
-    MS( ARG( CW( 'doSync' ) ), """
-      nom_do_sync( ACTION ) ;
-    """ ),
-    MS( ARG( CW( 'doAsync' ) ), """
+    MS( ARG( CW( 'schedule' ) ), """
       nom_do_async( ACTION ) ;
       JUMP__return_ANY( CONTEXT, CONTEXT, $NONE ) ;
     """ ),
